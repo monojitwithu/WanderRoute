@@ -1,0 +1,103 @@
+/* src/views/TripsDashboard/TripsDashboard.module.css */
+
+.inner {
+  display: flex; flex-direction: column; width: 100%; height: 100%;
+  max-width: 1000px; margin: 0 auto; padding: var(--sp-6) var(--sp-6) 0;
+}
+
+.header {
+  display: flex; align-items: flex-start; gap: var(--sp-6);
+  padding-bottom: var(--sp-6);
+  border-bottom: 1px solid var(--clr-border); flex-shrink: 0;
+  margin-bottom: var(--sp-6);
+}
+.title {
+  font-size: var(--fs-2xl); font-weight: var(--fw-bold);
+  letter-spacing: -0.02em; color: var(--clr-text-primary);
+}
+.sub {
+  font-size: var(--fs-md); color: var(--clr-text-secondary);
+  margin-top: var(--sp-1);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--sp-6);
+  padding-bottom: var(--sp-10);
+}
+
+.fadeWrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tripCard {
+  position: relative;
+  display: flex; flex-direction: column;
+  flex: 1;
+  padding: 0; /* padding applied to clickable area */
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
+}
+.tripCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.cardClickable {
+  padding: var(--sp-6);
+  display: flex; flex-direction: column; gap: var(--sp-2);
+  flex-grow: 1;
+}
+
+.tripTitle {
+  font-size: var(--fs-xl); font-weight: var(--fw-semibold);
+  color: var(--clr-text-primary); margin-right: var(--sp-8);
+}
+.tripMeta {
+  font-size: var(--fs-sm); color: var(--clr-text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.dates {
+  margin-top: auto; padding-top: var(--sp-3);
+  font-size: var(--fs-xs); color: var(--clr-accent);
+  font-weight: var(--fw-medium); text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.deleteBtn {
+  position: absolute; top: var(--sp-4); right: var(--sp-4);
+  opacity: 0.5;
+}
+.tripCard:hover .deleteBtn { opacity: 1; }
+
+.createCard {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--sp-4); padding: var(--sp-8);
+  border: 2px dashed var(--clr-border);
+  border-radius: var(--r-lg);
+  background: rgba(255,255,255,0.02);
+  color: var(--clr-text-secondary);
+  cursor: pointer; transition: all var(--dur-base);
+  min-height: 180px; height: 100%;
+}
+.createCard:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--clr-cyan); color: var(--clr-text-primary);
+}
+.createIcon {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(0,191,255,0.1); color: var(--clr-cyan);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; transition: transform var(--dur-base) var(--ease-spring);
+}
+.createCard:hover .createIcon { transform: scale(1.1) rotate(90deg); }
+
+@media (max-width: 600px) {
+  .inner { padding: var(--sp-4); }
+  .grid { grid-template-columns: 1fr; }
+}

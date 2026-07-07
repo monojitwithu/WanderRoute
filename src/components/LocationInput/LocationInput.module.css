@@ -1,0 +1,52 @@
+/* src/components/LocationInput/LocationInput.module.css */
+
+.wrap { position: relative; flex: 1; min-width: 0; }
+
+.input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-4);
+  font-family: var(--font-base);
+  font-size: 15px;
+  color: var(--clr-text-primary);
+  outline: none;
+  transition: border-color var(--dur-base), box-shadow var(--dur-base), background var(--dur-base);
+}
+.input::placeholder { color: var(--clr-text-muted); }
+.input:focus {
+  border-color: var(--clr-cyan);
+  background: rgba(0,191,255,0.04);
+  box-shadow: 0 0 0 3px var(--clr-cyan-dim), 0 0 20px rgba(0,191,255,0.08);
+}
+
+.dropdown {
+  background: rgba(15,20,30,0.97);
+  border: 1px solid rgba(0,191,255,0.25);
+  border-radius: var(--r-md);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  list-style: none;
+  padding: var(--sp-2) 0;
+  max-height: 240px;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,191,255,0.1);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  cursor: pointer;
+  font-size: var(--fs-sm);
+  color: var(--clr-text-secondary);
+  transition: background var(--dur-fast), color var(--dur-fast);
+}
+.item:hover, .itemActive {
+  background: rgba(0,191,255,0.08);
+  color: var(--clr-text-primary);
+}
+.itemIcon { flex-shrink: 0; font-size: 0.8rem; opacity: 0.7; }
+.itemLabel { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

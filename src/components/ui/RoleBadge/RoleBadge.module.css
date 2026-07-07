@@ -1,0 +1,15 @@
+/* src/components/ui/RoleBadge/RoleBadge.module.css */
+.badge {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.start { color: rgba(255, 213, 79, 0.9); }
+.stop  { color: rgba(0, 191, 255, 0.9); }
+.end   { color: rgba(255, 107, 107, 0.9); }

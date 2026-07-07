@@ -1,0 +1,52 @@
+/* src/components/ui/IconButton/IconButton.module.css */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast) var(--ease-spring);
+  outline: none;
+}
+
+/* Ghost variant */
+.ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--clr-text-muted);
+  width: 32px;
+  height: 32px;
+}
+.ghost:hover {
+  background: var(--clr-surface-hover);
+  color: var(--clr-text-primary);
+}
+
+/* Danger variant */
+.danger {
+  background: transparent;
+  border: 1px solid var(--clr-border);
+  color: var(--clr-text-muted);
+  width: 24px;
+  height: 24px;
+}
+.danger:hover {
+  background: rgba(255, 107, 107, 0.15);
+  border-color: rgba(255, 107, 107, 0.5);
+  color: var(--clr-danger);
+}
+
+/* Primary variant */
+.primary {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  color: var(--clr-text-secondary);
+  width: 32px;
+  height: 32px;
+}
+.primary:hover {
+  background: rgba(255, 213, 79, 0.1);
+  border-color: rgba(255, 213, 79, 0.5);
+  color: var(--clr-accent);
+  transform: rotate(90deg) scale(1.1);
+}

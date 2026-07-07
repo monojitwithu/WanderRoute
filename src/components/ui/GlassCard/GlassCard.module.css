@@ -1,0 +1,14 @@
+/* src/components/ui/GlassCard/GlassCard.module.css */
+.card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color var(--dur-base), box-shadow var(--dur-base);
+}
+
+.focusHighlight:focus-within {
+  border-color: rgba(0, 191, 255, 0.4);
+  box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.06);
+}

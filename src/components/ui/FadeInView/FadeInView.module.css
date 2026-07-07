@@ -1,0 +1,21 @@
+/* src/components/ui/FadeInView/FadeInView.module.css */
+
+/* Base — always hidden until IntersectionObserver fires */
+.base {
+  transition:
+    opacity 0.55s var(--ease-smooth),
+    transform 0.55s var(--ease-smooth);
+}
+
+/* Direction-specific initial transforms */
+.up    { opacity: 0; transform: translateY(24px); }
+.down  { opacity: 0; transform: translateY(-24px); }
+.left  { opacity: 0; transform: translateX(24px); }
+.right { opacity: 0; transform: translateX(-24px); }
+.none  { opacity: 0; transform: none; }
+
+/* When IntersectionObserver fires, we snap to natural position */
+.visible {
+  opacity: 1 !important;
+  transform: translate(0, 0) !important;
+}

@@ -1,0 +1,95 @@
+/* src/views/Home/Home.module.css */
+
+.inner {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  gap: var(--sp-8); padding: var(--sp-6); max-width: 680px; width: 100%;
+  height: 100%; max-height: 100vh; overflow-y: auto;
+}
+
+/* Badge */
+.badge {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--clr-border); border-radius: var(--r-pill);
+  background: var(--clr-surface); backdrop-filter: blur(12px);
+  font-size: var(--fs-xs); font-weight: var(--fw-medium);
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--clr-text-secondary);
+}
+.badgeDot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--clr-accent); box-shadow: 0 0 8px var(--clr-accent);
+  animation: dotPulse 2.4s ease-in-out infinite;
+}
+@keyframes dotPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.75); }
+}
+
+/* Headline */
+.headline {
+  font-size: clamp(var(--fs-3xl), 9vw, var(--fs-4xl));
+  font-weight: var(--fw-bold); line-height: 1.05; letter-spacing: -0.02em;
+  color: var(--clr-text-primary);
+}
+.accent {
+  background: linear-gradient(135deg, var(--clr-accent) 0%, #ff9800 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(255,213,79,0.4));
+}
+
+/* Sub */
+.sub {
+  font-size: var(--fs-lg); font-weight: var(--fw-light);
+  color: var(--clr-text-secondary); line-height: 1.7;
+}
+
+/* CTA */
+.ctaWrap { will-change: transform; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: var(--sp-3);
+  background: transparent; color: var(--clr-accent);
+  padding: var(--sp-4) var(--sp-10);
+  font-family: var(--font-base); font-size: var(--fs-md); font-weight: var(--fw-semibold);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-radius: var(--r-pill); border: 1px solid rgba(255,213,79,0.4);
+  cursor: pointer; backdrop-filter: blur(10px); outline: none; position: relative; overflow: hidden;
+  animation: breathe 4s ease-in-out infinite;
+  transition: background var(--dur-base), color var(--dur-base), border-color var(--dur-base), transform 0.3s var(--ease-spring), box-shadow 0.3s;
+}
+.btn::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,213,79,0.15) 50%, transparent 60%);
+  transform: translateX(-100%); transition: transform 0.5s;
+}
+.btn:hover::before { transform: translateX(100%); }
+.btn svg { transition: transform var(--dur-base) var(--ease-spring); }
+.btn:hover svg { transform: translateX(4px); }
+@keyframes breathe {
+  0%,100% { box-shadow: 0 0 15px rgba(255,213,79,0.2); border-color: rgba(255,213,79,0.35); }
+  50%      { box-shadow: 0 0 40px rgba(255,213,79,0.6), 0 0 80px rgba(255,213,79,0.2); border-color: rgba(255,213,79,0.9); }
+}
+.btn:hover {
+  animation-play-state: paused;
+  background: var(--clr-accent); color: var(--clr-bg); border-color: transparent;
+  box-shadow: 0 0 50px rgba(255,213,79,0.6), 0 0 100px rgba(255,213,79,0.25);
+  transform: scale(1.05) translateY(-2px);
+}
+.btn:active { transform: scale(0.97); }
+
+/* Feature chips */
+.features {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--sp-3);
+}
+.chip {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--clr-border); border-radius: var(--r-pill);
+  background: var(--clr-surface); backdrop-filter: blur(8px);
+  font-size: var(--fs-sm); color: var(--clr-text-secondary);
+  transition: border-color var(--dur-base), color var(--dur-base), background var(--dur-base);
+}
+.chip:hover {
+  border-color: rgba(0,191,255,0.4); color: var(--clr-text-primary);
+  background: rgba(0,191,255,0.05);
+}

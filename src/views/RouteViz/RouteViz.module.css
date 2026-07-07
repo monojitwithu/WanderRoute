@@ -1,0 +1,51 @@
+/* src/views/RouteViz/RouteViz.module.css */
+
+.inner  { display: flex; flex-direction: column; width: 100%; height: 100%; max-width: 1400px; margin: 0 auto; padding: var(--sp-6) var(--sp-6) 0; }
+
+.header { display: flex; align-items: center; gap: var(--sp-6); padding-bottom: var(--sp-4); border-bottom: 1px solid var(--clr-border); flex-shrink: 0; }
+.title  { font-size: var(--fs-xl); font-weight: var(--fw-bold); letter-spacing: -0.01em; color: var(--clr-text-primary); flex: 1; }
+
+.body {
+  display: grid; grid-template-columns: 360px 1fr; gap: var(--sp-6);
+  flex: 1; min-height: 0; padding: var(--sp-6) 0 var(--sp-6);
+}
+.left  { border-right: 1px solid var(--clr-border); padding-right: var(--sp-6); overflow-y: auto; }
+.right { overflow-y: auto; }
+
+/* Detail panel */
+.detail        { display: flex; flex-direction: column; gap: var(--sp-6); }
+.detailHeader  { display: flex; flex-direction: column; gap: var(--sp-1); }
+.detailName    { font-size: var(--fs-2xl); font-weight: var(--fw-bold); letter-spacing: -0.02em; color: var(--clr-text-primary); }
+.detailDate    { font-size: var(--fs-sm); color: var(--clr-text-muted); }
+
+.routeInfo {
+  display: flex; gap: var(--sp-6);
+  padding: var(--sp-3) var(--sp-4);
+  font-size: var(--fs-sm); color: var(--clr-text-secondary); font-weight: var(--fw-medium);
+}
+
+.sectionTitle  { font-size: var(--fs-md); font-weight: var(--fw-semibold); color: var(--clr-text-primary); }
+.weatherSection, .placesSection { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.placesHeader  { display: flex; align-items: center; justify-content: space-between; }
+.manageBtn {
+  display: inline-flex; align-items: center; padding: var(--sp-2) var(--sp-4);
+  background: rgba(255,213,79,0.1); border: 1px solid rgba(255,213,79,0.3);
+  border-radius: var(--r-pill); font-family: var(--font-base);
+  font-size: var(--fs-xs); font-weight: var(--fw-semibold); letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--clr-accent); cursor: pointer;
+  transition: background var(--dur-base), box-shadow var(--dur-base);
+}
+.manageBtn:hover { background: rgba(255,213,79,0.18); box-shadow: 0 0 20px rgba(255,213,79,0.2); }
+
+.noPlaces { font-size: var(--fs-sm); color: var(--clr-text-muted); font-style: italic; }
+.placesList { display: flex; flex-direction: column; gap: var(--sp-2); }
+.placeItem  { display: flex; align-items: flex-start; gap: var(--sp-3); padding: var(--sp-3) var(--sp-4); }
+.placeIcon  { flex-shrink: 0; }
+.placeName  { font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--clr-text-primary); display: block; }
+.placeNote  { font-size: var(--fs-xs); color: var(--clr-text-muted); display: block; margin-top: 2px; }
+
+@media (max-width: 768px) {
+  .body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: var(--sp-4); }
+  .left { border-right: none; border-bottom: 1px solid var(--clr-border); padding-right: 0; padding-bottom: var(--sp-4); max-height: 50vh; }
+}
