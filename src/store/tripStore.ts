@@ -4,8 +4,8 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { getTravelTime } from '../api/routing';
-import { getPlaceWeather } from '../api/weather';
+import { getPlaceWeather, fetchAllStopWeather } from '../api/weather';
+import { getTravelTime, getRoute } from '../api/routing';
 import type { Trip, TripStop, RouteSegment, DayForecast, StopRole, Place, GeoResult } from '../types';
 
 function newId(): string {
@@ -76,6 +76,9 @@ interface TripStore {
   getStop: (id: string) => TripStop | undefined;
   getWeather: (stopId: string) => DayForecast[];
   getSegmentBefore: (stopId: string) => RouteSegment | undefined;
+
+  // Refreshes all routing and weather data
+  refreshAllData: () => Promise<void>;
 }
 
 // ── Helper to mutate active trip ──────────────────────────────────────────────
@@ -349,6 +352,48 @@ export const useTripStore = create<TripStore>()(
         const idx = trip.stops.findIndex((s) => s.id === stopId);
         if (idx <= 0) return undefined;
         return trip.segments[idx - 1];
+      },
+
+      refreshAllData: async () => {
+        const trip = get().getActiveTrip();
+        if (!trip) return;
+
+        try {
+          const [segs, wx, updatedStops] = await Promise.all([
+            getRoute(trip.stops),
+            fetchAllStopWeather(trip.stops),
+            Promise.all(trip.stops.map(async (stop) => {
+              if (!stop.lat || !stop.lon || stop.places.length === 0) return stop;
+              const newPlaces = await Promise.all(stop.places.map(async (p) => {
+                if (!p.lat || !p.lon) return p;
+                const weatherPromise = getPlaceWeather(p.lat, p.lon);
+                
+                const baseLat = stop.hotel?.lat ?? stop.lat;
+                const baseLon = stop.hotel?.lon ?? stop.lon;
+                let travelTimeHr = p.travelTimeHr;
+                if (baseLat && baseLon) {
+                  const routeSegs = await getRoute([{ lat: baseLat, lon: baseLon } as any, { lat: p.lat, lon: p.lon } as any]);
+                  travelTimeHr = routeSegs.length > 0 ? routeSegs[0].durationHr : p.travelTimeHr;
+                }
+
+                const weather = await weatherPromise;
+                return {
+                  ...p,
+                  weather: weather || p.weather,
+                  travelTimeHr
+                };
+              }));
+              return { ...stop, places: newPlaces };
+            }))
+          ]);
+
+          get().setTripStops(updatedStops);
+          get().setSegments(segs);
+          get().setWeather(wx);
+        } catch (e) {
+          console.error("Failed to refresh all trip data", e);
+          throw e;
+        }
       },
     }),
     {

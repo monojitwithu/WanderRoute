@@ -3,8 +3,6 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, FieldArray, Form } from 'formik';
 import { useTripStore } from '../../store/tripStore';
-import { getRoute } from '../../api/routing';
-import { fetchAllStopWeather, getPlaceWeather } from '../../api/weather';
 import { StopRow } from './StopRow';
 import { FadeInView } from '../../components/ui/FadeInView/FadeInView';
 import { Icon } from '../../components/ui/Icon/Icon';
@@ -18,7 +16,6 @@ export function TripBuilder() {
   const navigate = useNavigate();
   const activeTrip = useTripStore((s) => (s.activeTripId ? s.trips[s.activeTripId] : null));
   const stops = activeTrip?.stops ?? [];
-  const { setSegments, setWeather } = useTripStore();
 
   useEffect(() => {
     if (activeTrip && stops.length === 0) {
@@ -42,29 +39,7 @@ export function TripBuilder() {
           }
 
           try {
-            const [segs, wx, updatedStops] = await Promise.all([
-              getRoute(values.stops),
-              fetchAllStopWeather(values.stops),
-              Promise.all(values.stops.map(async (stop: any) => {
-                if (!stop.lat || !stop.lon || stop.places.length === 0) return stop;
-                const newPlaces = await Promise.all(stop.places.map(async (p: any) => {
-                  if (!p.lat || !p.lon) return p;
-                  const weatherPromise = getPlaceWeather(p.lat, p.lon);
-                  const routePromise = getRoute([{ lat: stop.lat, lon: stop.lon } as any, { lat: p.lat, lon: p.lon } as any]);
-                  const [weather, routeSegs] = await Promise.all([weatherPromise, routePromise]);
-                  return {
-                    ...p,
-                    weather: weather || p.weather,
-                    travelTimeHr: routeSegs.length > 0 ? routeSegs[0].durationHr : p.travelTimeHr
-                  };
-                }));
-                return { ...stop, places: newPlaces };
-              }))
-            ]);
-            
-            setTripStops(updatedStops);
-            setSegments(segs);
-            setWeather(wx);
+            await useTripStore.getState().refreshAllData();
             navigate('/route');
           } catch {
             setStatus('Could not load route. Check your connection and try again.');

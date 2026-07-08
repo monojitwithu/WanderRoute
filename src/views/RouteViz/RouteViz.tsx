@@ -5,8 +5,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTripStore } from '../../store/tripStore';
-import { getForecast, fetchAllStopWeather } from '../../api/weather';
-import { getRoute } from '../../api/routing';
+import { getForecast } from '../../api/weather';
 import { generateAlertsForTrip } from '../../api/alerts';
 import { RouteVisualizer } from '../../components/RouteVisualizer/RouteVisualizer';
 import { FadeInView } from '../../components/ui/FadeInView/FadeInView';
@@ -17,7 +16,7 @@ import { DetailPanel } from './DetailPanel';
 export function RouteViz() {
   const navigate = useNavigate();
   const activeTrip = useTripStore((s) => (s.activeTripId ? s.trips[s.activeTripId] : null));
-  const { setActiveStopId, updateStopWeather, setSegments, setWeather } = useTripStore();
+  const { setActiveStopId, updateStopWeather } = useTripStore();
   const stops = useMemo(() => activeTrip?.stops ?? [], [activeTrip?.stops]);
   const segments = useMemo(() => activeTrip?.segments ?? [], [activeTrip?.segments]);
   const weather = useMemo(() => activeTrip?.weather ?? {}, [activeTrip?.weather]);
@@ -56,12 +55,7 @@ export function RouteViz() {
     if (!activeTrip) return;
     setIsRefreshing(true);
     try {
-      const [segs, wx] = await Promise.all([
-        getRoute(stops),
-        fetchAllStopWeather(stops)
-      ]);
-      setSegments(segs);
-      setWeather(wx);
+      await useTripStore.getState().refreshAllData();
     } catch (err) {
       console.error(err);
       alert('Failed to refresh data.');
@@ -69,6 +63,14 @@ export function RouteViz() {
       setIsRefreshing(false);
     }
   }
+
+  // Refresh all data when landing on this view
+  useEffect(() => {
+    if (stops.length > 0 && !isRefreshing) {
+      handleRefresh();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
 
   return (
     <div className={styles.inner}>
