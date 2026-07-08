@@ -9,7 +9,7 @@
 
 ## 1. Project Overview
 
-**WanderRoute** is a React + TypeScript trip planner deployed on Netlify via Vite build.
+**WanderRoute** is a React + TypeScript trip planner deployed on GitHub Pages via GitHub Actions.
 
 **Core experience:**
 1. Animated ambient home screen → "Start Planning"
@@ -39,7 +39,7 @@ Trip App/
 ├── vite.config.ts                         ← Vite config: react plugin, port 5173, dist output
 ├── tsconfig.json                          ← Strict TS config
 ├── package.json                           ← deps: react, react-dom, react-router-dom, zustand
-├── netlify.toml                           ← build=npm run build, publish=dist/
+├── .github/workflows/deploy.yml         ← GitHub Actions deployment pipeline
 │
 ├── src/
 │   ├── main.tsx                           ← Entry: imports global.css, renders <App>
@@ -380,10 +380,10 @@ npm run build     # Output to dist/
 npm run preview
 ```
 
-**Netlify deploy:** Connect GitHub repo or drag `dist/` folder to Netlify Drop.
-- Build command: `npm run build`
-- Publish dir: `dist`
-- HashRouter means no `_redirects` needed (URLs use `/#/path`)
+**GitHub Pages deploy:**
+- Automated via GitHub Actions on every push to `main`.
+- Requirement: Go to Repo Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
+- HashRouter means no server redirects needed (URLs use `/#/path`)
 
 ---
 
