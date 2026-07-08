@@ -33,8 +33,8 @@ export function DetailPanel({ stopId, onAddPlaces }: Props) {
   const alerts = activeTrip ? generateAlertsForTrip(activeTrip).filter(a => a.stopId === stopId) : [];
 
 
-  const arrival = stop.computedArrivalTime ? new Date(stop.computedArrivalTime) : null;
-  const departure = new Date(stop.departureTime);
+  const arrival = stop?.computedArrivalTime ? new Date(stop.computedArrivalTime) : null;
+  const departure = stop ? new Date(stop.departureTime) : new Date();
   const stayForecast = fc.filter(day => {
     const dayDate = new Date(day.date);
     const startOfDay = arrival ? new Date(arrival) : new Date(0);
